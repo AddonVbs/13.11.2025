@@ -11,18 +11,23 @@ type LinksRepository interface {
 	GetStatusLinks(models.Links) ([]models.Links, error)
 }
 
-type RepositoryService struct{}
+type RepositoryLinsk struct{}
 
-func (r *RepositoryService) SaveHistory(link models.Links) error {
+func (r *RepositoryLinsk) SaveHistory(link models.Links) error {
+	if link.ID == 0 {
+		DBarr.LastID++
+		link.ID = DBarr.LastID
+	}
+
 	DBarr.DB = append(DBarr.DB, link)
 	return nil
 }
 
-func (r *RepositoryService) GetSavedLinks() ([]models.Links, error) {
+func (r *RepositoryLinsk) GetSavedLinks() ([]models.Links, error) {
 	return DBarr.DB, nil
 }
 
-func (r *RepositoryService) GetStatusLinks(links models.Links) ([]models.Links, error) {
+func (r *RepositoryLinsk) GetStatusLinks(links models.Links) ([]models.Links, error) {
 	r.SaveHistory(links)
 	return DBarr.DB, nil
 }
