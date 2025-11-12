@@ -9,7 +9,7 @@ import (
 )
 
 type LinksService interface {
-	GetSaveLinskService() (models.Links, error)
+	GetSaveLinskService() ([]models.Links, error)
 	GetStatusLinksService(models.Links) ([]models.Links, error)
 	GetStatusLinksServiceById(id int) (models.Links, error)
 }

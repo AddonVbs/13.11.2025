@@ -14,6 +14,13 @@ type LinksRepository interface {
 type RepositoryLinsk struct{}
 
 func (r *RepositoryLinsk) SaveHistory(link models.Links) error {
+	for i := range DBarr.DB {
+		if DBarr.DB[i].URL == link.URL {
+			DBarr.DB[i].Status = link.Status
+			return nil
+		}
+	}
+
 	if link.ID == 0 {
 		DBarr.LastID++
 		link.ID = DBarr.LastID
