@@ -1,0 +1,68 @@
+openapi: 3.0.3
+info:
+  title: Links Checker
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8080
+    description: Локальный сервер
+
+paths:
+  /links:
+    get:
+      operationId: getLinks
+      responses:
+        "200":
+          description: Список сохранённых ссылок
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Link"
+              example:
+                - links_num: 1
+                  url: "https://example.com"
+                  status: "available"
+                - links_num: 2
+                  url: "https://google.com"
+                  status: "not available"
+
+  /links/{id}:
+    get:
+      operationId: getLinkById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          example: 1
+      responses:
+        "200":
+          description: Информация о ссылке
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Link"
+              example:
+                links_num: 1
+                url: "https://example.com"
+                status: "available"
+        "404":
+          description: Ссылка не найдена
+
+components:
+  schemas:
+    Link:
+      type: object
+      properties:
+        links_num:
+          type: integer
+          example: 1
+        url:
+          type: string
+          example: "https://example.com"
+        status:
+          type: string
+          example: "available"
